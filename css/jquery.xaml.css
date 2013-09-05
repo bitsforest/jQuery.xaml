@@ -1,0 +1,26 @@
+/*** StackPanel ***/
+ul.stackpanel {
+    margin:0;
+    padding:0;
+    list-style:none;
+}
+
+ul.orientation-horizontal li{
+    display:inline;
+    float:left;
+}
+
+ul.orientation-vertical li {
+    display:block;
+    text-align:center;
+}
+
+ul.orientation-horizontal li * {
+    height:100%;
+    margin:0;
+}
+
+ul.orientation-vertical li * {
+    width: 100%;
+    margin:0;
+}
