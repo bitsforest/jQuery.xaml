@@ -6,13 +6,67 @@
         5. restoreAttr
 */
 
-function resolveTag(srcTagName) {
-	switch(srcTagName.toLowerCase()) {
-		case 'stackpanel':
-			replaceTag(srcTagName, 'ul').addClass(srcTagName).replaceCustomAttr().childrenWrap('li').replaceChildrenCustomAttr();
-			//return replaceTag(srcTagName, 'ul').addClass(srcTagName).replaceCustomAttr().restoreAttr().childrenWrap('li');
-	}
+
+jQuery.fn.xaml = function () {
+	$(this).each(function () {
+		resolveTag($(this));
+	});
+};
+
+
+function resolveTag(target) {
+	target.children().each(function () {
+		resolveTag($(this));
+	});
+
+	var tagName = target[0].tagName.toLowerCase();
+	target.each( function() {
+		switch(tagName) {
+			case 'stackpanel':			
+				$(this).replaceTag('ul').addClass(tagName).replaceCustomAttr().childrenWrap('li').replaceChildrenCustomAttr();
+				break;
+				//return replaceTag(srcTagName, 'ul').addClass(srcTagName).replaceCustomAttr().restoreAttr().childrenWrap('li');
+			case 'grid':
+				var table = $(this).replaceTag('table').addClass(tagName).replaceCustomAttr();
+				//table.children("grid\\.rowdefinitions").remove();
+				//table.children("grid\\.columndefinitions").remove();
+
+				/*
+				for(var r = 0; r < trs.length; r++) {
+					for(var c = 0; c < tds.length; c++) {
+						trs[r].append(tds[c]);
+					}
+					table.append("<tr>test</tr>");
+				}
+				*/
+
+
+				break;
+			case 'grid.rowdefinitions':
+				$(this).replaceTag('table');
+				break;
+			case 'rowdefinition':
+				$(this).replaceTag('tr');
+				break;
+			case 'grid.columndefinitions':
+				$(this).replaceTag('table');
+				break;
+			case 'columndefinition':
+				$(this).replaceTag('td');
+				break;
+		}
+	});
 }
+
+
+/*
+	1. grid => table
+	2. rowdefinitions => tr
+	3. columndefinitions => td
+	4. child-element => (row,column) append
+
+*/
+
 
 jQuery.fn.replaceChildrenCustomAttr = function () {
 	$(this).children().each(function () {
@@ -21,18 +75,18 @@ jQuery.fn.replaceChildrenCustomAttr = function () {
 	$(this).each(function() {
 			$(this).replaceCustomAttr();
 	});
-}
+};
 
 
-function replaceTag(srcTagName, destTagName) {
+jQuery.fn.replaceTag = function (destTagName) {
 	var newTag = null;
-	$(srcTagName).replaceWith(function(){
+	$(this).replaceWith(function(){
 		newTag = $("<"+destTagName+" />", {html: $(this).html(), data : $(this).data()});
 		newTag.attr($(this).allAttr());
 		return newTag;
 	});
 	return newTag;
-}
+};
 
 /*
 jQuery.fn.restoreAttr = function() {
@@ -73,12 +127,13 @@ jQuery.fn.replaceCustomAttr = function () {
 				$(this).css("vertical-align", value);
 				break;
 			default:
-				$(this).addClass(key + "-" + $(this).data()[key]);
+				$(this).addClass(key + "-" + $(this).data()[key].toLowerCase());
 		}
 		$(this).removeAttr('data-' + key);
 	}
 	return this;
 };
+
 
 
 jQuery.fn.childrenWrap = function (wrapTagName) {

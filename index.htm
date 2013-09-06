@@ -9,7 +9,7 @@
     <link href="./css/jquery.xaml.css" media="all" rel="stylesheet" type="text/css" />
 	<script>
 	$(document).ready(function() {
-		resolveTag('stackpanel');
+		$('stackpanel').xaml();
 	});
 	</script>
 </head>
@@ -20,10 +20,35 @@
 <stackpanel data-orientation="horizontal" data-background="yellow" name="abc" data-height='200px'><button data-width="100px">text</button><button data-width="100px" data-HorizontalAlignment="right" data-height="50px">abc</button></stackpanel>
 //-->
 
-<stackpanel data-orientation="horizontal" data-background="yellow" data-width="400px" data-height="300px">
+<div style="height:400px">
+<stackpanel data-orientation="horizontal" data-background="yellow">
 	<button data-width="200px">test</button>
-   	<button data-width="100px" data-height="50px" data-verticalalignment="center">test</button>
+   	<button data-width="100px" data-height="50px" data-verticalalignment="bottom">test</button>
+    <stackpanel data-orientation="horizontal" >
+        <button>abc</button>
+        <button>abc</button>
+    </stackpanel>
 </stackpanel>
+
+
+<!--
+<Grid data-Background="Yellow">
+    <Grid.RowDefinitions>
+        <RowDefinition Height="20px"/></RowDefinition>
+        <RowDefinition Height="20px"/></RowDefinition>
+        <RowDefinition Height="20px"/></RowDefinition>
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="100px"></ColumnDefinition>
+        <ColumnDefinition Width="100px"></ColumnDefinition>
+        <ColumnDefinition Width="100px"></ColumnDefinition>
+    </Grid.ColumnDefinitions>
+    <Button Grid.Column="0">1</Button>
+    <Button Grid.Column="1">2</Button>
+    <Button Grid.Column="2">3</Button>
+</Grid>
+//-->
+</div>
 
 </body>
 

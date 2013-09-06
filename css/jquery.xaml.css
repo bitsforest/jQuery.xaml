@@ -3,6 +3,9 @@ ul.stackpanel {
     margin:0;
     padding:0;
     list-style:none;
+    width:100%;
+    height:100%;
+    display:inherit;
 }
 
 ul.orientation-horizontal li{
@@ -24,4 +27,10 @@ ul.orientation-horizontal li * {
 ul.orientation-vertical li * {
     width: 100%;
     margin:0;
+}
+
+/*** Grid ***/
+table.grid {
+    margin:0;
+    padding:0;
 }
